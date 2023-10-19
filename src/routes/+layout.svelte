@@ -3,9 +3,18 @@
 	import '../app.postcss';
 </script>
 
+<svelte:head>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap"
+		rel="stylesheet"
+	/>
+</svelte:head>
+
 <Navbar />
 
-<main class="min-height container mx-auto flex flex-col gap-2 justify-center items-center">
+<main class="min-height container mx-auto flex flex-col gap-8 justify-center items-center py-12">
 	<slot />
 </main>
 
