@@ -6,7 +6,7 @@
 	let client: Client;
 
 	let currentTemp = 0;
-	$: displayTemp = currentTemp.toFixed(0);
+	$: displayTemp = currentTemp.toFixed(1);
 	$: isConnected = true;
 
 	const clientId = 'clientId-' + Math.random();
@@ -21,8 +21,9 @@
 	});
 
 	// called when a message arrives
-	client.onMessageArrived = (message) => {
-		currentTemp = Number(message.payloadString);
+	client.onMessageArrived = ({ payloadString }) => {
+		console.log(payloadString);
+		currentTemp = Number(payloadString);
 	};
 </script>
 
