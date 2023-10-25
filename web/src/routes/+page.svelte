@@ -2,29 +2,35 @@
 	import { PUBLIC_MQTT_BROKER_PORT, PUBLIC_MQTT_BROKER_URL } from '$env/static/public';
 	import { Loader } from 'lucide-svelte';
 	import { Client } from 'paho-mqtt';
+	import type { PageServerData } from './$types';
+	import { onMount } from 'svelte';
 
+	export let data: PageServerData;
 	let client: Client;
 
 	let currentTemp = 0;
 	$: displayTemp = currentTemp.toFixed(1);
 	$: isConnected = true;
 
-	const clientId = 'clientId-' + Math.random();
-	client = new Client(PUBLIC_MQTT_BROKER_URL, Number(PUBLIC_MQTT_BROKER_PORT), clientId);
+	onMount(() => {
+		const clientId = 'clientId-' + Math.random();
+		client = new Client(PUBLIC_MQTT_BROKER_URL, Number(PUBLIC_MQTT_BROKER_PORT), clientId);
 
-	client.connect({
-		onSuccess: () => {
-			client.subscribe('ats-temp/#');
-			isConnected = false;
-		},
-		reconnect: true
+		client.connect({
+			useSSL: data.environment === 'production',
+			onSuccess: () => {
+				client.subscribe('ats-temp/#');
+				isConnected = false;
+			},
+			reconnect: true
+		});
+
+		// called when a message arrives
+		client.onMessageArrived = ({ payloadString }) => {
+			console.log(payloadString);
+			currentTemp = Number(payloadString);
+		};
 	});
-
-	// called when a message arrives
-	client.onMessageArrived = ({ payloadString }) => {
-		console.log(payloadString);
-		currentTemp = Number(payloadString);
-	};
 </script>
 
 <svelte:head>
