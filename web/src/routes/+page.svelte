@@ -1,23 +1,36 @@
 <script lang="ts">
+	import { PUBLIC_MQTT_BROKER_PORT, PUBLIC_MQTT_BROKER_URL } from '$env/static/public';
+	import { Loader } from 'lucide-svelte';
 	import { Client } from 'paho-mqtt';
+	import type { PageServerData } from './$types';
+	import { onMount } from 'svelte';
 
+	export let data: PageServerData;
 	let client: Client;
-	let currentTemp = -50.6;
-	$: displayTemp = currentTemp.toFixed(0);
 
-	client = new Client('broker.hivemq.com', 8000, 'clientId-' + Math.random());
+	let currentTemp = 0;
+	$: displayTemp = currentTemp.toFixed(1);
+	$: isConnected = true;
 
-	client.connect({
-		onSuccess: () => {
-			client.subscribe('ssuniie/#');
-		},
-		reconnect: true
+	onMount(() => {
+		const clientId = 'clientId-' + Math.random();
+		client = new Client(PUBLIC_MQTT_BROKER_URL, Number(PUBLIC_MQTT_BROKER_PORT), clientId);
+
+		client.connect({
+			useSSL: data.environment === 'production',
+			onSuccess: () => {
+				client.subscribe('ats-temp/#');
+				isConnected = false;
+			},
+			reconnect: true
+		});
+
+		// called when a message arrives
+		client.onMessageArrived = ({ payloadString }) => {
+			console.log(payloadString);
+			currentTemp = Number(payloadString);
+		};
 	});
-
-	// called when a message arrives
-	client.onMessageArrived = (message) => {
-		currentTemp = Number(message.payloadString);
-	};
 </script>
 
 <svelte:head>
@@ -25,9 +38,13 @@
 </svelte:head>
 
 <div class="text-center flex flex-col gap-8">
-	<div class="flex flex-col">
+	<div class="flex flex-col justify-center items-center">
 		<p class="text-xl">อุณหภูมิในขณะนี้</p>
-		<h4 class="font-bold text-8xl">{displayTemp}°C</h4>
+		{#if isConnected}
+			<Loader class="animate-spin w-32 h-32" />
+		{:else}
+			<h4 class="font-bold text-8xl">{displayTemp}°C</h4>
+		{/if}
 	</div>
 
 	<span class="text-sm text-muted-foreground">ระบบจะทำการอ่านค่าทุก ๆ 5 วินาที</span>
