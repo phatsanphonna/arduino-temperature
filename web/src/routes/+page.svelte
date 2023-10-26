@@ -4,6 +4,9 @@
 	import { Client } from 'paho-mqtt';
 	import type { PageServerData } from './$types';
 	import { onMount } from 'svelte';
+	import { chill, cold, hot, snow, warm } from './quotes';
+
+	import { marked as mark } from 'marked';
 
 	export let data: PageServerData;
 	let client: Client;
@@ -30,6 +33,8 @@
 			console.log(payloadString);
 			currentTemp = Number(payloadString);
 		};
+
+		console.log(hot);
 	});
 </script>
 
@@ -57,19 +62,20 @@
 		คำแนะนำสำหรับอุณหภูมิ {displayTemp} องศาเซลเซียส (อบอุ่น)
 	</h3>
 
-	<p class="leading-7 [&:not(:first-child)]:mt-6">
-		Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequatur architecto mollitia dolore
-		ad, delectus, asperiores explicabo quis rem blanditiis magnam corrupti esse quod. Pariatur
-		iusto, nostrum quia nihil sint labore.Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-		Consequatur architecto mollitia dolore ad, delectus, asperiores explicabo quis rem blanditiis
-		magnam corrupti esse quod. Pariatur iusto, nostrum quia nihil sint labore.Lorem, ipsum dolor sit
-		amet consectetur adipisicing elit. Consequatur architecto mollitia dolore ad, delectus,
-		asperiores explicabo quis rem blanditiis magnam corrupti esse quod. Pariatur iusto, nostrum quia
-		nihil sint labore.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequatur
-		architecto mollitia dolore ad, delectus, asperiores explicabo quis rem blanditiis magnam
-		corrupti esse quod. Pariatur iusto, nostrum quia nihil sint labore.Lorem, ipsum dolor sit amet
-		consectetur adipisicing elit. Consequatur architecto mollitia dolore ad, delectus, asperiores
-		explicabo quis rem blanditiis magnam corrupti esse quod. Pariatur iusto, nostrum quia nihil sint
-		labore.
-	</p>
+	<article
+		class="white-space: pre-wrap;
+ 	prose lg:prose-xl leading-7 [&:not(:first-child)]:mt-6"
+	>
+		{#if currentTemp >= 28 && currentTemp < 35}
+			{@html mark(warm)}
+		{:else if currentTemp >= 20 && currentTemp < 28}
+			{@html mark(chill)}
+		{:else if currentTemp >= 0 && currentTemp < 20}
+			{@html mark(cold)}
+		{:else if currentTemp < 0}
+			{@html mark(snow)}
+		{:else if currentTemp >= 35}
+			{@html mark(hot)}
+		{/if}
+	</article>
 </div>
