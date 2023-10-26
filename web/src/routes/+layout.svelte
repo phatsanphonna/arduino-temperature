@@ -14,7 +14,9 @@
 
 <Navbar />
 
-<main class="min-height container mx-auto flex flex-col gap-8 justify-center items-center py-12">
+<main
+	class="w-full min-height container mx-auto flex flex-col gap-8 justify-center items-center py-12"
+>
 	<slot />
 </main>
 

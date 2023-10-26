@@ -33,8 +33,6 @@
 			console.log(payloadString);
 			currentTemp = Number(payloadString);
 		};
-
-		console.log(hot);
 	});
 </script>
 
