@@ -42,22 +42,20 @@
 
 <div class="text-center flex flex-col gap-8">
 	<div class="flex flex-col justify-center items-center">
-		<p class="text-xl">อุณหภูมิในขณะนี้</p>
+		<p class="text-xl">Current temperature</p>
 		{#if isConnected}
 			<Loader class="animate-spin w-32 h-32" />
 		{:else}
 			<h4 class="font-bold text-8xl">{displayTemp}°C</h4>
 		{/if}
 	</div>
-
-	<span class="text-sm text-muted-foreground">ระบบจะทำการอ่านค่าทุก ๆ 5 วินาที</span>
 </div>
 
 <hr class="w-full" />
 
 <div>
 	<h3 class="scroll-m-20 text-2xl font-semibold tracking-tight">
-		คำแนะนำสำหรับอุณหภูมิ {displayTemp} องศาเซลเซียส (อบอุ่น)
+		Recommendation for {displayTemp}°C
 	</h3>
 
 	<article
