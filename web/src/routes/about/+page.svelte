@@ -51,4 +51,7 @@
 	>
 		วิดีโอตัวอย่าง
 	</h2>
+	<a class="text-blue-700 underline underline-offset-1" href="https://youtu.be/d_INH0gorT4"
+		>https://youtu.be/d_INH0gorT4</a
+	>
 </div>

@@ -18,8 +18,8 @@
 #define PIN_2G 12
 
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
-char ssid[] = "Bruh";        // your network SSID (name)
-char pass[] = "bruh1234";    // your network password (use for WPA, or use as key for WEP)
+char ssid[] = "111016_KMITL_2.4G";        // your network SSID (name)
+char pass[] = "77264776";    // your network password (use for WPA, or use as key for WEP)
 
 #if defined(ARDUINO_ARCH_AVR) && !defined(HAVE_HWSERIAL1)
 #include "SoftwareSerial.h"
