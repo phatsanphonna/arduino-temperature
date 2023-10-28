@@ -16,6 +16,10 @@
 		ในการเชื่อมต่อสื่อสารระหว่าง Arduino ไปยังเว็บไซต์
 		ให้ทำงานแจ้งเตือนหากมีสภาพอากาศที่เสี่ยงต่อการเกิดโรคฮีทสโตรก
 
+## วิดีโอตัวอย่างและเว็บไซต์
+- เว็บไซต์: [https://arduino-temperature.vercel.app](https://arduino-temperature.vercel.app)
+- วิดีโอตัวอย่าง: [https://www.youtube.com/watch?v=d_INH0gorT4](https://www.youtube.com/watch?v=d_INH0gorT4)
+
 ## สมาชิกภายในกลุ่ม
 - **65070144** พรพัฒน์ ธนทัตธาดา
 - **65070171** ภัทร์สรรพ์พร นครานุรักษ์
